@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import getFormattedPrice from '../getFormattedPrice';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
@@ -15,16 +16,6 @@ function ListItem(props) {
   const { url, MainImage, title, currency_code, price, quantity } = props;
 
   const titleLimit = 50;
-
-  let formattedPrice;
-
-  if (currency_code === 'USD') {
-    formattedPrice = `$${price}`;
-  } else if (currency_code === 'EUR') {
-    formattedPrice = `€${price}`;
-  } else {
-    formattedPrice = `${price} ${currency_code}`;
-  }
 
   const quantityClassName = classNames('item-quantity', {
     'level-low': quantity <= 10,
@@ -47,7 +38,7 @@ function ListItem(props) {
               : title
           }
         </p>
-        <p className="item-price">{formattedPrice}</p>
+        <p className="item-price">{getFormattedPrice(currency_code, price)}</p>
         <p className={quantityClassName}>{quantity} left</p>
       </div>
     </div>
